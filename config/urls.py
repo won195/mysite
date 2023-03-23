@@ -13,12 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# django.contrib 모듈에서 admin 모듈을 가져옴 Django의 관리자 인터페이스
 from django.contrib import admin
+# django.urls 모듈에서 path, include 함수를 가져옴 URL 패턴을 정의
 from django.urls import path, include
+# bbsnote 앱의 views 모듈을 가져옴
 from bbsnote import views
 
+# URL 패턴 목록 정의
 urlpatterns = [
+    # 첫 번째 URL 패턴 이 패턴은 'admin/' 문자열과 일치하며, 일치할 경우 Django의 관리자 인터페이스 호출
     path('admin/', admin.site.urls),
+    # 두 번째 URL 패턴 이 패턴은 'bbsnote/' 문자열과 일치하며, 일치할 경우 ‘bbsnote.urls’ 모듈에 정의된 URL 패턴 목록이 포함
     path('bbsnote/', include('bbsnote.urls')),
+    # 세 번째 URL 패턴 이 패턴은 빈 문자열과 일치하며, 일치할 경우 views.index 뷰 함수 호출
     path('', views.index),
 ]
