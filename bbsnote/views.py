@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 # 현재 디렉토리의 models 모듈에서 Board, Comment 클래스를 가져옴 데이터베이스 테이블
 from .models import Board, Comment
-
+from .forms import BoardForm
 
 # Create your views here.
 
@@ -16,7 +16,7 @@ def index(request):
     board_list = Board.objects.order_by('-create_date')
     # 컨텍스트 변수, 템플릿에 전달되어 렌더링에 사용
     context = {'board_list': board_list}
-    #return HttpResponse("bbsnote에 오신 것을 환영합니다")
+    ##return HttpResponse("bbsnote에 오신 것을 환영합니다")
     # 템플릿 파일 'bbsnote/board_list.html'을 렌더링하여 HTTP 응답 객체를 반환 
     return render(request, 'bbsnote/board_list.html', context)
 
@@ -42,3 +42,26 @@ def comment_create(request, board_id):
     # bbsnote:detail이라는 URL 패턴으로 리디렉션하고 board_id라는 인자로 board.id 값을 전달
     # 사용자가 특정 게시판의 세부 정보 페이지로 이동
     return redirect('bbsnote:detail', board_id = board.id)
+
+# board_create라는 이름의 뷰 함수 정의 request 객체를 인자로 받음
+def board_create(request):
+    # 요청의 HTTP 메소드가 'POST’인지 확인
+    if request.method == 'POST':
+        # ‘POST’ 요청의 데이터를 사용하여 BoardForm 객체 생성
+        form = BoardForm(request.POST)
+        # valid 로 True, False폼이 유효한지 검사
+        if form.is_valid():
+            # 폼 데이터를 사용하여 board 객체를 생성하고 데이터베이스에 저장하지 않함
+            board = form.save(commit=False)
+            # board 객체의 creat_date 속성을 현재 시간으로 설정
+            board.creat_date = timezone.now()
+            # board 객체를 데이터베이스에 저장
+            board.save()
+            # 'bbsnote:index’라는 이름의 URL로 리다이렉트
+            return redirect('bbsnote:index')
+    # HTTP 메소드가 'POST’가 아닌 경우 실행
+    else:
+        # 빈 BoardForm 객체를 생성
+        form = BoardForm()
+    # ‘bbsnote/board_form.html’ 템플릿을 사용하여 응답을 생성하고, 템플릿 컨텍스트에 ‘form’ 변수로 폼 객체를 전달
+    return render(request, 'bbsnote/board_form.html', {'form': form})

@@ -12,7 +12,7 @@ def index(request):
     return HttpResponse("bbsnote에 오신 것을 환영합니다")
 
 # 두 번째 뷰 함수 index를 정의
-# 이 함수는 첫 번째 뷰 함수와 이름이 같으므로 첫 번째 뷰 함수를 덮어쓰게 됩니다.
+# 첫 번째 뷰 함수를 덮어쓰게 됩니다.
 def index(request):
     # 문자열 "Hello, world."를 포함하는 HTTP 응답 객체를 반환합니다.
     return HttpResponse("Hello, world.")
