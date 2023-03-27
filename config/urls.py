@@ -27,6 +27,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 두 번째 URL 패턴 이 패턴은 'bbsnote/' 문자열과 일치하며, 일치할 경우 ‘bbsnote.urls’ 모듈에 정의된 URL 패턴 목록이 포함
     path('bbsnote/', include('bbsnote.urls')),
+    # common이라는 링크로 들어오면 common.urls로 이동
+    path('common/', include('common.urls')),
     # 세 번째 URL 패턴 이 패턴은 빈 문자열과 일치하며, 일치할 경우 views.index 뷰 함수 호출
-    path('', views.index),
+    path('', views.index, name='index'),
+    
 ]

@@ -10,7 +10,7 @@ app_name = 'bbsnote'
 urlpatterns = [
     # 첫 번째 URL 패턴 이 패턴은 빈 문자열과 일치하고 일치할 경우 views.index 뷰 함수가 호출
     path('',views.index, name='index'),
-    # 두 번째 URL 패턴 이 패턴은 정수형 변수인 board_id와 일치하며, 일치할 경우 views.detail 뷰 함수가 호출
+    # 두 번째 URL 패턴 이 패턴은 정수형 변수인 board_id와 일치하고, 일치할 경우 views.detail 뷰 함수가 호출
     path('<int:board_id>/', views.detail, name='detail'),
     # 세 번째 URL 패턴 이 패턴은 'comment/create/' 문자열 다음에 정수형 변수인 board_id와 일치하며
     # 일치할 경우 views.comment_create 뷰 함수가 호출

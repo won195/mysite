@@ -7,15 +7,25 @@ from django.utils import timezone
 # 현재 디렉토리의 models 모듈에서 Board, Comment 클래스를 가져옴 데이터베이스 테이블
 from .models import Board, Comment
 from .forms import BoardForm
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 # 첫 번째 뷰 함수 index를 정의, HTTP 요청 객체인 request를 인자로 받음
 def index(request):
+    # 입력인자
+    page = request.GET.get('page', 1)
+    
+    # 조회
     # 데이터베이스에서 Board 객체 목록을 가져옴 이 목록은 생성 날짜의 역순으로 정렬
     board_list = Board.objects.order_by('-create_date')
+    # board_list는 페이지로 나눌 데이터 목록이고 5는 한 페이지에 표시할 항목 수
+    paginator = Paginator(board_list, 5)
+    # get_page 메소드는 페이지 번호를 받아 해당 페이지를 리턴
+    page_obj = paginator.get_page(page)
+    
     # 컨텍스트 변수, 템플릿에 전달되어 렌더링에 사용
-    context = {'board_list': board_list}
+    context = {'board_list': page_obj}
     ##return HttpResponse("bbsnote에 오신 것을 환영합니다")
     # 템플릿 파일 'bbsnote/board_list.html'을 렌더링하여 HTTP 응답 객체를 반환 
     return render(request, 'bbsnote/board_list.html', context)
