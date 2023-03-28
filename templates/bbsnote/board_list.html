@@ -7,6 +7,7 @@
         <tr class="text-center thead-dark"> 
             <th></th>           
             <th style="width:50%">제목</th>
+            <th>작성자</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -17,7 +18,8 @@
             <td>{{ board_list.paginator.count|sub:board_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td class="text-left">
                 <a href="{% url 'bbsnote:detail' board.id %}">{{ board.subject }}</a>                
-            </td>            
+            </td>
+            <td>{{ board.author }}</td>
             <td>{{ board.create_date }}</td>
         </tr>
         {% endfor %}
@@ -75,11 +77,11 @@
 {% block script %}
 
 <script type='text/javascript'>
-$(document).ready(function(){
-    $(".page-link").on('click', function() {
-        $("#page").val($(this).data("page"));
-        $("#searchForm").submit();
-    });     
-});
+    $(document).ready(function(){
+        $(".page-link").on('click', function() {
+            $("#page").val($(this).data("page"));
+            $("#searchForm").submit();
+        });     
+    });
 </script>
 {% endblock %}
