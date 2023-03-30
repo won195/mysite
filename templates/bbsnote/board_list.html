@@ -17,10 +17,17 @@
         <tr class="text-center">
             <td>{{ board_list.paginator.count|sub:board_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td class="text-left">
-                <a href="{% url 'bbsnote:detail' board.id %}">{{ board.subject }}</a>                
+                <a href="{% url 'bbsnote:detail' board.id %}">
+                    {{ board.subject }}
+                    {% if board.comment_set.count > 0 %}
+                    <span class = 'text-danger small ml-2'>
+                        [{{ board.comment_set.count }}]
+                    </span>
+                    {% endif %}
+                </a>                
             </td>
-            <td>{{ board.author }}</td>
-            <td>{{ board.create_date }}</td>
+            <td>{{ board.author.username }}</td>
+            <td>{{ board.create_date | date:"Y-m-d A h:i" }}</td>
         </tr>
         {% endfor %}
         {% else %}

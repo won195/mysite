@@ -1,7 +1,7 @@
 # 장고의 forms 모듈을 가져옴
 from django import forms
 # bbsnote 앱의 models 모듈에서 Board 모델을 가져옴
-from bbsnote.models import Board
+from bbsnote.models import Board, Comment
 
 # BoardForm이라는 모델 폼을 정의 forms.ModelForm을 상속
 class BoardForm(forms.ModelForm):
@@ -20,3 +20,11 @@ class BoardForm(forms.ModelForm):
         #     'subject' : '제목',
         #     'content' : '내용',
         # }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {
+            'content':'댓글내용'
+        }

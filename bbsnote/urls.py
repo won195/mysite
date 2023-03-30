@@ -17,4 +17,8 @@ urlpatterns = [
     path('comment/create/<int:board_id>/', views.comment_create, name='comment_create'),
     # ‘board/create/’ 경로와 views.board_create 뷰 함수를 연결
     path('board/create/', views.board_create, name='board_create'),
+    path('board/modify/<int:board_id>/', views.board_modify, name='board_modify'),
+    path('board/delete/<int:board_id>', views.board_delete, name='board_delete'),
+    path('comment/modify/<int:comment_id>/', views.comment_modify, name='comment_modify'),
+    path('comment/delete/<int:comment_id>/', views.comment_delete, name='comment_delete'),
 ]
