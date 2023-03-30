@@ -1,7 +1,7 @@
 # 장고의 기본 관리자 페이지 모듈
 from django.contrib import admin
 # 현재 디렉토리의 models.py 파일에서 Board 모델 가져오기
-from .models import Board
+from .models import *
 
 
 # BoardAdmin 클래스를 정의하고, 이 클래스는 admin.ModelAdmin을 상속 
@@ -12,4 +12,4 @@ class BoardAdmin(admin.ModelAdmin):
 
 # 관리자 페이지에 Board 모델을 등록하고, 이 모델은 위의 클래스의 정의된 방식으로 표시
 admin.site.register(Board, BoardAdmin)
-
+admin.site.register(Comment)

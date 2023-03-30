@@ -37,6 +37,8 @@ def index(request):
 def detail(request, board_id):
     # 데이터베이스에서 id가 board_id인 Board 객체를 가져옴
     board = Board.objects.get(id=board_id)
+
+    # comment = Comment.objects.all().order_by('-create_daate')
     # 컨텍스트 변수, 이 변수는 템플릿에 전달되어 렌더링에 사용
     context = {'board': board}
     # 템플릿 파일 'bbsnote/board_detail.html'을 렌더링하여 HTTP 응답 객체를 반환
@@ -108,6 +110,8 @@ def board_modify(request, board_id):
             board = form.save(commit=False)
             # board 객체의 author 속성을 요청을 보낸 사용자로 설정
             board.author = request.user
+
+            board.update_date = timezone.now()
             # 변경 사항을 데이터베이스에 저장
             board.save()
             # ‘bbsnote:detail’ URL로 리디렉션되고 board_id라는 인수 필요

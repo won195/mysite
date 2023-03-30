@@ -42,3 +42,9 @@ class Comment(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     # 객체가 저장될 때마다 자동으로 현재 날짜/시간으로 갱신
     update_date = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-create_date']
+
+    def __str__(self):
+        return f'[{self.board.id}:{self.subject}] {self.content}'
